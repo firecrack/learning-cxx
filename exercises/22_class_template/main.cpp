@@ -10,7 +10,10 @@ struct Tensor4D {
 
     Tensor4D(unsigned int const shape_[4], T const *data_) {
         unsigned int size = 1;
-        for (unsigned int i = 0; i < 4; ++i) size *= shape[i];
+        for (int i = 0; i < 4; ++i) {
+            shape[i] = shape_[i];
+            size *= shape[i];
+        }
         data = new T[size];
         std::memcpy(data, data_, size * sizeof(T));
     }
@@ -29,7 +32,6 @@ struct Tensor4D {
     // 则 `this` 与 `others` 相加时，3 个形状为 `[1, 2, 1, 4]` 的子张量各自与 `others` 对应项相加。
     Tensor4D &operator+=(Tensor4D const &others) {
         for (int i = 0; i < 4; ++i) {
-            //std::cout << shape[i] << " " << others.shape[i] << std::endl;
             if (shape[i] != others.shape[i] && others.shape[i] != 1) {
                 throw std::invalid_argument("Shapes are incompatible for broadcasting");
             }
