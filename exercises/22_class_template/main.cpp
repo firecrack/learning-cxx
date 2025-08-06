@@ -39,7 +39,7 @@ struct Tensor4D {
                 for (unsigned int k = 0; k < shape[2]; ++k) {
                     for (unsigned int l = 0; l < shape[3]; ++l) {
                         unsigned int this_idx = ((i  * shape[1] + j) * shape[2] + k) * shape[3] + l;
-                        // 单向广播，只需检查other 是否为1即可
+                        // 单向广播
                         unsigned int i_ = others.shape[0] == 1 ? 0 : i;
                         unsigned int j_ = others.shape[1] == 1 ? 0 : j;
                         unsigned int k_ = others.shape[2] == 1 ? 0 : k;
